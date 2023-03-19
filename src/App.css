@@ -1,0 +1,224 @@
+* {
+  padding: 0;
+  margin: 0;
+  color: black;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: whitesmoke;
+}
+
+#nav-wrapper {
+  height: 7vh;
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: black;
+}
+
+#nav-logo {
+  height: 4.1vh;
+  width: 13vh;
+  background-image: url(/src/images/logo.webp);
+  background-size: cover;
+  cursor: pointer;
+}
+
+#nav-list {
+  display: flex;
+  list-style: none;
+  gap: 5vw;
+  cursor: pointer;
+}
+
+.nav-list-item {
+  padding: 8px;
+  color: whitesmoke;
+}
+
+#hero-image {
+  max-height: 20vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-image: url(/src/images/hero.jpg);
+  background-size: cover;
+  overflow: hidden;
+}
+
+#hero-image::after {
+  content: "";
+  height: 20vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+}
+
+#featured-section-wrapper {
+  height: 35vw;
+  width: 100%;
+  margin: auto;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 20vw 20vw 20vw 20vw;
+  grid-template-rows: auto;
+  gap: 5vw;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.featured-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.featured-item-image {
+  height: 70%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.featured-item-description {
+  height: 30%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+}
+
+.featured-item-name {
+  font-size: 1.5vw;
+  font-weight: bolder;
+}
+
+.featured-item-price {
+  font-size: 1.3vw;
+  opacity: 0.8;
+}
+
+#featured-image-1 {
+  background-image: url(/src/images/featured-image-1.jpg);
+  background-size: cover;
+}
+
+#featured-image-2 {
+  background-image: url(/src/images/featured-image-2.jpg);
+  background-size: cover;
+}
+
+#featured-image-3 {
+  background-image: url(/src/images/featured-image-3.jpg);
+  background-size: cover;
+}
+
+#featured-image-4 {
+  background-image: url(/src/images/featured-image-4.jpg);
+  background-size: cover;
+}
+
+#featured2-image-1 {
+  background-image: url(/src/images/featured2-image-1.jpg);
+  background-size: cover;
+}
+
+#featured2-image-2 {
+  background-image: url(/src/images/featured2-image-2.jpg);
+  background-size: cover;
+}
+
+#featured2-image-3 {
+  background-image: url(/src/images/featured2-image-3.jpg);
+  background-size: cover;
+}
+
+#featured2-image-4 {
+  background-image: url(/src/images/featured2-image-4.jpg);
+  background-size: cover;
+}
+
+#main-featured-section-wrapper {
+  height: 50vw;
+  width: 100%;
+  display: flex;
+}
+
+.main-featured-item {
+  height: 100%;
+  width: 50%;
+}
+
+#main-featured-1 {
+  background-image: url(/src/images/main-featured-1.webp);
+  background-size: cover;
+}
+
+#main-featured-1::before {
+  content: "The new Legacy travels for work";
+  position: relative;
+  top: 70%;
+  left: 5%;
+  display: flex;
+  color: white;
+  font-size: 1.7vw;
+}
+
+#main-featured-2 {
+  background-image: url(/src/images/main-featured-2.webp);
+  background-size: cover;
+}
+
+#main-featured-2::before {
+  content: "Introducing: The Reina V2";
+  position: relative;
+  top: 70%;
+  left: 5%;
+  display: flex;
+  color: white;
+  font-size: 1.7vw;
+}
+
+.main-featured-button {
+  height: 4vw;
+  width: 14vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 75%;
+  left: 5%;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#footer-wrapper {
+  height: 150px;
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+#footer-nav-list {
+  display: flex;
+  list-style: none;
+  gap: 5vw;
+  cursor: pointer;
+}/*# sourceMappingURL=App.css.map */
