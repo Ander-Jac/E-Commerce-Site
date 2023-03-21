@@ -56,17 +56,21 @@ body {
 }
 
 #cart-list {
+  display: flex;
+  flex-direction: column;
   padding-top: 10px;
 }
 
-.cart-item-wrapper {
+.cart-item {
+  width: 90%;
+  margin: auto;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 15px 0;
 }
 
-.cart-item-name {
-  font-size: 65%;
+.cart-item-des {
+  font-size: 70%;
 }
 
 #hero-image {

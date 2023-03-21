@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from "react";
 import "./App.css"
+import { async } from "regenerator-runtime";
 
 
 const root = createRoot(document.getElementById("root"))
@@ -24,6 +25,31 @@ class App extends React.Component {
 
 
 const NavBar = () => {
+
+  useEffect(() => {
+    console.log(cartList)
+    const cartElements = cartList.map(item => {
+      const des = document.createElement('div');
+      des.classList.add("cart-item-des");
+      des.textContent = `${item.name} - ${item.price}`;
+
+      const x = document.createElement('button');
+      x.classList.add("cart-item-x");
+      x.innerHTML = "X";
+
+      const li = document.createElement('li');
+      li.classList.add("cart-item")
+      li.appendChild(des)
+      li.appendChild(x)
+      return li;
+    });
+
+    const cartListContainer = document.querySelector('#cart-list');
+    cartElements.forEach(element => {
+      cartListContainer.appendChild(element);
+    });
+    console.log(cartListContainer)
+  })
   const handleItemClick = () => {
     root.render(<App />);
   };
@@ -40,7 +66,7 @@ const NavBar = () => {
 
       </nav>
     )
-};
+}; 
 
 const HeroSection = () => {
   return (
@@ -137,32 +163,41 @@ const IIPMainContent = (props) => {
   const { info } = props;
   
   const [id, setId] = useState("");
+  const [itemId, setItemId] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [des, setDes] = useState("");
   
   /* Event Handler for Cart Add */
-  const cartList = document.getElementById("cart-list");
-  const handleItemClick = () => {
-  const itemName = document.createElement("div");
-  itemName.append(name);
-  itemName.classList.add("cart-item-name");
+  const handleButtonClick = () => {
+    const newObject = {id: id, itemId: itemId, name: name, price: price};
+    cartList.push(newObject);
 
-  const x = document.createElement("div");
-  x.innerHTML = "X";
-  x.classList.add("cart-x");
+    const cartListContainer = document.querySelector('#cart-list');
+    const cartElements = cartList.map(item => {
+      const des = document.createElement('div');
+      des.classList.add("cart-item-des");
 
-  const wrapper = document.createElement("li");
-  wrapper.append(itemName);
-  wrapper.append(x);
-  wrapper.classList.add("cart-item-wrapper")
+      const x = document.createElement('div');
+      x.classList.add("cart-item-x");
+      x.innerHTML = "X";
 
-  cartList.append(wrapper);
-};
+      des.textContent = `${item.name} - ${item.price}`;
+
+      const li = document.createElement('li');
+      li.classList.add("cart-item")
+      li.appendChild(des)
+      li.appendChild(x)
+      return li;
+    });
+    
+    cartListContainer.append(cartElements[cartList.length-1]);
+  };
 
   useEffect(() => {
     async function populateSection() {
-      setId(info.id);
+      setId(cartList.length + 1)
+      setItemId(info.itemId);
       setName(info.name);
       setPrice(info.price);
       setDes(info.description);
@@ -179,7 +214,7 @@ const IIPMainContent = (props) => {
           <h3 id="IIP-price">{price}</h3>
         </div>
         <p id="IIP-description">{des}</p>
-        <button id="IIP-button" onClick={() => handleItemClick()}>Add To Cart | {price}</button>
+        <button id="IIP-button" onClick={() => handleButtonClick()}>Add To Cart | {price}</button>
       </div>
     </section>
   );
@@ -191,6 +226,8 @@ const IIPMainContent = (props) => {
 root.render (
   <App />
 )
+
+const cartList = [];
 
 const products = [
   {
