@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from "react";
 import "./App.css"
 import { async } from "regenerator-runtime";
+import { indexOf } from "lodash";
 
 
 const root = createRoot(document.getElementById("root"))
@@ -25,31 +26,43 @@ class App extends React.Component {
 
 
 const NavBar = () => {
-
   useEffect(() => {
-    console.log(cartList)
-    const cartElements = cartList.map(item => {
-      const des = document.createElement('div');
-      des.classList.add("cart-item-des");
-      des.textContent = `${item.name} - ${item.price}`;
+    function setCartContents() {
+      const cartListContainer = document.querySelector('#cart-list');
+      cartListContainer.innerHTML = "";
 
-      const x = document.createElement('button');
-      x.classList.add("cart-item-x");
-      x.innerHTML = "X";
+      const cartElements = cartList.map(item => {
+        const des = document.createElement('div');
+        des.classList.add("cart-item-des");
+        des.textContent = `${item.name} - ${item.price}`;
 
-      const li = document.createElement('li');
-      li.classList.add("cart-item")
-      li.appendChild(des)
-      li.appendChild(x)
-      return li;
-    });
+        const x = document.createElement('button');
+        x.classList.add("cart-item-x");
+        x.innerHTML = "X";
 
-    const cartListContainer = document.querySelector('#cart-list');
+        const li = document.createElement('li');
+        li.classList.add("cart-item")
+        li.appendChild(des)
+        li.appendChild(x)
+
+        x.addEventListener("click", () => {
+          cartList.splice(item.id - 1, 1);
+          cartList.forEach(element => {
+            if(element.id > item.id) {
+              element.id -= 1;
+            }
+          })
+          setCartContents();
+        }) 
+        return li;
+      })
+    
     cartElements.forEach(element => {
       cartListContainer.appendChild(element);
     });
-    console.log(cartListContainer)
-  })
+  } setCartContents();
+  }, [])
+
   const handleItemClick = () => {
     root.render(<App />);
   };
@@ -66,7 +79,7 @@ const NavBar = () => {
 
       </nav>
     )
-}; 
+};
 
 const HeroSection = () => {
   return (
@@ -167,6 +180,17 @@ const IIPMainContent = (props) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [des, setDes] = useState("");
+
+  useEffect(() => {
+    async function populateSection() {
+      setId(cartList.length + 1)
+      setItemId(info.itemId);
+      setName(info.name);
+      setPrice(info.price);
+      setDes(info.description);
+    }
+    populateSection();
+  }, [info]);
   
   /* Event Handler for Cart Add */
   const handleButtonClick = () => {
@@ -190,20 +214,9 @@ const IIPMainContent = (props) => {
       li.appendChild(x)
       return li;
     });
-    
     cartListContainer.append(cartElements[cartList.length-1]);
   };
 
-  useEffect(() => {
-    async function populateSection() {
-      setId(cartList.length + 1)
-      setItemId(info.itemId);
-      setName(info.name);
-      setPrice(info.price);
-      setDes(info.description);
-    }
-    populateSection();
-  }, [info]);
 
   return (
     <section id="IIP-main-content-wrapper">
