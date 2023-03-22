@@ -1,5 +1,4 @@
 import React from "react"
-import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from "react";
 import "./App.css"
@@ -8,19 +7,16 @@ import "./App.css"
 
 const root = createRoot(document.getElementById("root"))
 
-
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-          <NavBar />
-          <HeroSection />
-          <FeaturedSection products={products} />
-          <MainFeatures />
-          <FeaturedSection products={products2} />
-      </div>
-    );
-  }
+const App = () => {
+  return (
+    <div>
+      <NavBar />
+      <HeroSection />
+      <FeaturedSection products={products} />
+      <MainFeatures products={products} />
+      <FeaturedSection products={products2} />
+    </div>
+  );
 };
 
 
@@ -56,24 +52,37 @@ const NavBar = () => {
         return li;
       })
     
-    cartElements.forEach(element => {
+      cartElements.forEach(element => {
       cartListContainer.appendChild(element);
     });
+
+    if(cartListContainer.childElementCount > 0) {
+      const cart = document.getElementById("cart");
+      cart.innerHTML = cartListContainer.childElementCount;
+    } else cart.innerHTML = ""
+
   } setCartContents();
   }, [])
 
   const handleItemClick = () => {
     root.render(<App />);
   };
+
+  const handleCartClick = () => {
+    const cartDropdown = document.getElementById("cart-dropdown");
+    if(cartDropdown.style.display != "flex") {
+      cartDropdown.style.display = "flex";
+    } else cartDropdown.style.display = "none"
+  }
     return (
        <nav id="nav-wrapper">
 
         <div id="nav-logo" onClick={() => handleItemClick()}></div>
 
-        <div id="cart"></div>
+        <div id="cart" onClick={() => handleCartClick()}></div>
         <div id="cart-dropdown">
           <ul id="cart-list"></ul>
-          <button href="checkout.html" id="cart-button">Checkout</button>
+          <a href="checkout.html"><button id="cart-button">Checkout</button></a>
         </div>
 
       </nav>
@@ -128,15 +137,21 @@ const FeaturedSection = (props) => {
   );
 };
 
-const MainFeatures = () => {
+const MainFeatures = (props) => {
+  const handleLegacyButtonClick = () => {
+    root.render(<IIP info={props.products[2]}/>)
+  }
+  const handleReinaButtonClick = () => {
+    root.render(<IIP info={props.products[1]}/>)
+  }
   return(
     <section id="main-featured-section-wrapper">
 
       <div id="main-featured-1" className="main-featured-item">
-        <div className="main-featured-button">View Legacy Traveler</div>
+        <div className="main-featured-button" onClick={() => handleLegacyButtonClick()}>View Legacy Traveler</div>
       </div>
       <div id="main-featured-2" className="main-featured-item">
-        <div className="main-featured-button">View Reina</div>
+        <div className="main-featured-button" onClick={() => handleReinaButtonClick()}>View Reina</div>
       </div>
 
     </section>
@@ -226,9 +241,14 @@ const IIPMainContent = (props) => {
 
         return li;
       });
-    cartElements.forEach(element => {
+
+      cartElements.forEach(element => {
       cartListContainer.appendChild(element);
     });
+    if(cartListContainer.childElementCount > 0) {
+      const cart = document.getElementById("cart");
+      cart.innerHTML = cartListContainer.childElementCount;
+    } else cart.innerHTML = "";
   };
 
   const handleButtonClick = () => {

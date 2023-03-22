@@ -9,6 +9,7 @@ $secondary-color: whitesmoke;
     color: black;
     font-family: "Spartan", sans-serif;
     overflow-x: hidden;
+    user-select: none;
 }
 body {
     background-color: whitesmoke;
@@ -40,12 +41,15 @@ body {
     background-image: url(/src/images/cart.png);
     background-size: cover;
     cursor: pointer;
+    color: darkgreen;
+    text-align: right;
+    font-weight: bolder;
 }
 #cart-dropdown {
     height: 60vh;
     width: 41vh;
     position: relative;
-    display: flex;
+    display: none;
     flex-direction: column;
     position: fixed;
     right: 0;
@@ -57,13 +61,15 @@ body {
     border-bottom-left-radius: 15px;
 }
 #cart-list {
+    height: max-content;
+    max-height: 80%;
     display: flex;
     flex-direction: column;
     padding-top: 10px;
-    overflow-y: scroll;
 }
 .cart-item {
     height: min-content;
+    min-height: 5%;
     width: 90%;
     margin: auto;
     display: flex;
@@ -72,6 +78,14 @@ body {
 }
 .cart-item-des {
     font-size: 70%;
+}
+.cart-item-x {
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
 }
 #cart-button {
     height: 18%;
@@ -86,9 +100,6 @@ body {
     background-color: rgb(0, 175, 50, .7);
     color: whitesmoke;
     cursor: pointer;
-}
-#cart-button:hover {
-    background-color: rgb(0, 175, 50);
 }
 
 $hero-image-height: 20vw;
@@ -137,7 +148,7 @@ $hero-image-height: 20vw;
     transition: .15s ease-in;
 }
 .featured-item:hover {
-    border: 1px solid rgb(0, 0, 0, .25)
+    border: 2px solid rgb(0, 0, 0, .25)
 }
 .featured-item-image {
     height: 75%;
