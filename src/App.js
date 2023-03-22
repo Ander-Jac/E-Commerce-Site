@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from "react";
 import "./App.css"
-import { async } from "regenerator-runtime";
-import { indexOf } from "lodash";
+
 
 
 const root = createRoot(document.getElementById("root"))
@@ -74,7 +73,7 @@ const NavBar = () => {
         <div id="cart"></div>
         <div id="cart-dropdown">
           <ul id="cart-list"></ul>
-          <div id="cart-button"></div>
+          <button href="checkout.html" id="cart-button">Checkout</button>
         </div>
 
       </nav>
@@ -176,6 +175,7 @@ const IIPMainContent = (props) => {
   const { info } = props;
   
   const [id, setId] = useState("");
+  const [imageId, setImageId] = useState("");
   const [itemId, setItemId] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -184,6 +184,7 @@ const IIPMainContent = (props) => {
   useEffect(() => {
     async function populateSection() {
       setId(cartList.length + 1)
+      setImageId(info.imageId)
       setItemId(info.itemId);
       setName(info.name);
       setPrice(info.price);
@@ -193,34 +194,54 @@ const IIPMainContent = (props) => {
   }, [info]);
   
   /* Event Handler for Cart Add */
+  function setCartContents () {
+      const cartListContainer = document.querySelector('#cart-list');
+      cartListContainer.innerHTML = "";
+
+      const cartElements = cartList.map(item => {
+        const des = document.createElement('div');
+        des.classList.add("cart-item-des");
+
+        const x = document.createElement('button');
+        x.classList.add("cart-item-x");
+        x.innerHTML = "X";
+
+        des.textContent = `${item.name} - ${item.price}`;
+
+        const li = document.createElement('li');
+        li.classList.add("cart-item")
+        li.appendChild(des)
+        li.appendChild(x)
+
+        x.addEventListener("click", () => {
+          console.log("triggered")
+          cartList.splice(item.id - 1, 1);
+          cartList.forEach(element => {
+            if(element.id > item.id) {
+              element.id -= 1;
+            }
+          })
+          setCartContents()
+        }) 
+
+        return li;
+      });
+    cartElements.forEach(element => {
+      cartListContainer.appendChild(element);
+    });
+  };
+
   const handleButtonClick = () => {
     const newObject = {id: id, itemId: itemId, name: name, price: price};
     cartList.push(newObject);
+    setCartContents()
+  }
 
-    const cartListContainer = document.querySelector('#cart-list');
-    const cartElements = cartList.map(item => {
-      const des = document.createElement('div');
-      des.classList.add("cart-item-des");
-
-      const x = document.createElement('div');
-      x.classList.add("cart-item-x");
-      x.innerHTML = "X";
-
-      des.textContent = `${item.name} - ${item.price}`;
-
-      const li = document.createElement('li');
-      li.classList.add("cart-item")
-      li.appendChild(des)
-      li.appendChild(x)
-      return li;
-    });
-    cartListContainer.append(cartElements[cartList.length-1]);
-  };
-
+  setCartContents()
 
   return (
     <section id="IIP-main-content-wrapper">
-      <div id={`featured-image-${id}`} className="IIP-image"></div>
+      <div id={`featured-image-${imageId}`} className="IIP-image"></div>
       <div id="IIP-info">
         <div>
           <h1 id="IIP-name">{name}</h1>
@@ -245,6 +266,7 @@ const cartList = [];
 const products = [
   {
     id: 1,
+    imageId: 1,
     name: "CORONADA | 36MM",
     price: "$198",
     imgUrl: "/src/images/featured-image-1.jpg",
@@ -252,6 +274,7 @@ const products = [
   },
   {
     id: 2,
+    imageId: 2,
     name: "REINA | 30MM",
     price: "$148",
     imgUrl: "/src/images/featured-image-2.jpg",
@@ -259,6 +282,7 @@ const products = [
   },
   {
     id: 3,
+    imageId: 3,
     name: "LEGACY TRAVELER | 42MM",
     price: "$178",
     imgUrl: "/src/images/featured-image-3.jpg",
@@ -266,6 +290,7 @@ const products = [
   },
   {
     id: 4,
+    imageId: 4,
     name: "BLACKTOP II SOLAR | 47MM",
     price: "$216",
     imgUrl: "/src/images/featured-image-4.jpg",
@@ -275,7 +300,8 @@ const products = [
 
 const products2 = [
   {
-  id: 5,
+    id: 5,
+    imageId: 5,
     name: "ELEMENT | 43MM",
     price: "$171",
     imgUrl: "/src/images/featured-image-5.jpg",
@@ -283,6 +309,7 @@ const products2 = [
   },
   {
     id: 6,
+    imageId: 6,
     name: "CHRONO CERAMIC | 45MM",
     price: "$298",
     imgUrl: "/src/images/featured-image-6.jpg",
@@ -290,6 +317,7 @@ const products2 = [
   },
   {
     id: 7,
+    imageId: 7,
     name: "AIRHAWK | 42MM",
     price: "$228",
     imgUrl: "/src/images/featured-image-7.jpg",
@@ -297,6 +325,7 @@ const products2 = [
   },
   {
     id: 8,
+    imageId: 8,
     name: "FIELD | 41MM",
     price: "$118",
     imgUrl: "/src/images/featured-image-8.jpg",
